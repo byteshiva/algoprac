@@ -1,3 +1,18 @@
+
+const {createLogger , format, transports } = require('winston');
+const {combine , timestamp, label, prettyPrint} = format;
+
+const logger = createLogger({
+    format: combine(
+        label({label: 'algo intro'}),
+        timestamp(),
+        prettyPrint()
+    ),
+    transports : [new transports.Console()]
+});
+
+
+
 // @ TODO - add debug statements
 // Find the missing number in Arithmetic Progression 
 function findMissingUsingBinarySearch(arr , low , high , diff) {
@@ -14,18 +29,27 @@ function findMissingUsingBinarySearch(arr , low , high , diff) {
     console.log("middle number ", mid);
 
     if (arr[mid+1] - arr[mid] != diff) {
-        console.log("left array only");
+        logger.log({
+            level: 'info',
+            message: 'left side of array'
+        });
         return (arr[mid] + diff);
     }
 
     
     if (mid > 0 && (arr[mid] - arr[mid-1] != diff)) {
-        console.log("right array only");
+        logger.log({
+            level: 'info',
+            message: 'right side of array'
+        });
         return (arr[mid] + diff);
     }
 
     if (arr[mid] == arr[0] + mid*diff){
-        console.log("Missing element using recurr");
+        logger.log({
+            level: 'info',
+            message: 'Missing element using right side of array'
+        });
         return findMissingUsingBinarySearch(arr, mid+1, high, diff);
     }
 
@@ -36,7 +60,10 @@ function findMissingUsingBinarySearch(arr , low , high , diff) {
 function  findMissing(arr , n) {
     var diff = (arr[n -1] - arr[0])/n;
 
-    console.log("Diff output ", diff);
+    logger.log({
+        level: 'info',
+        message: 'Difff output'
+    });
     return findMissingUsingBinarySearch(arr, 0 , n, diff);
 }
 
@@ -45,8 +72,14 @@ function execute() {
     // var arr = [2, 4, 6, 10];
 
     var n = arr.length;
-    console.log(arr[n -1 ], arr[0]);
-    console.log((arr[n-1] - arr[0])/n);
+    logger.log(
+        'info',
+        'First  %d and last %d element', arr[n-1], arr[0]
+    );
+    logger.log(
+        'info',
+        'Diff %d element for the given arithemetic series ', (arr[n-1], arr[0])/2
+    );
 
     console.log("Missing element is ", findMissing(arr, n));
 }

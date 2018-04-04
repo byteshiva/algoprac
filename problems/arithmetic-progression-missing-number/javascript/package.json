@@ -10,6 +10,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "bunyan": "^1.8.12"
+    "winston": "^3.0.0-rc3"
   }
 }
